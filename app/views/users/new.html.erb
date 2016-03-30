@@ -2,6 +2,9 @@
 
 <%= flash[:error] %>
 <form action='<%= users_url %>' method='post'>
+  <input type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>" >
   <label for='user[user_name]'> user name </label>
   <input type='text' name='user[user_name]'>
 

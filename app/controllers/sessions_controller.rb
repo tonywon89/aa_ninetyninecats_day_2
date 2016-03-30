@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :check_logged_in, only: [:new]
+
   def new
     @user = User.new
     render :new
@@ -11,8 +13,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(user_name, password)
 
     if @user
-      @user.reset_session_token!
-      session[:session_token] = @user.session_token
+      login_user!
       redirect_to cats_url
     else
       flash.now[:error] = "Incorrect username or password"
@@ -36,5 +37,9 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:user_name, :password)
+  end
+
+  def check_logged_in
+    redirect_to cats_url if current_user
   end
 end
