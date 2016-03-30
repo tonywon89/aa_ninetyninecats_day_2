@@ -1,4 +1,6 @@
 class CatsController < ApplicationController
+  before_action :check_logged_in, only: [:new, :show, :edit]
+
   def index
     @cats = Cat.all
     render :index
@@ -16,6 +18,7 @@ class CatsController < ApplicationController
 
   def create
     @cat = Cat.new(cat_params)
+    @cat.user_id = current_user.id
     if @cat.save
       redirect_to cat_url(@cat)
     else
@@ -45,4 +48,12 @@ class CatsController < ApplicationController
     params.require(:cat)
       .permit(:age, :birth_date, :color, :description, :name, :sex)
   end
+
+  def check_logged_in
+    unless current_user
+      flash.now[:not_logged_in] = "Please log in to make a play with cats"
+      redirect_to cats_url
+    end
+  end
+
 end

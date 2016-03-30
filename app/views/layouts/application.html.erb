@@ -7,6 +7,8 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= flash[:not_logged_in] %>
+  <br/>
   <% if current_user %>
     <%= current_user.user_name %>
     <%= button_to 'Log Out', session_url(1), method: :delete %>
@@ -14,6 +16,7 @@
     <%= link_to 'Log In', new_session_url %>
     <%= link_to 'Sign Up', new_user_url %>
   <% end %>
+
 <%= yield %>
 
 </body>
