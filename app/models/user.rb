@@ -35,6 +35,6 @@ class User < ActiveRecord::Base
   end
 
   def generate_session_token
-    SecureRandom.base64
+    SecureRandom::urlsafe_base64(16)
   end
 end
