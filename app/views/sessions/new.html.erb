@@ -1,0 +1,14 @@
+<h1>Log In</h1>
+<%= flash[:error] %>
+
+<form action="<%= sessions_url %>" method="post">
+  <label for="session[user_name]">Username</label>
+  <input type="text" name="session[user_name]">
+
+  <label for="session[password]">Password</label>
+  <input type="password" name="session[password]">
+
+  <input type="submit" value="Log in">
+</form>
+
+<%= link_to "Sign up", new_user_url %>
