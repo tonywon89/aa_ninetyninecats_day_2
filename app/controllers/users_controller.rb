@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :check_logged_in, only: [:new]
+  before_action :check_not_logged_in, only: [:new]
 
   def new
   end
@@ -21,10 +21,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:user_name, :password)
-  end
-
-  def check_logged_in
-    redirect_to cats_url if current_user
   end
 
 end

@@ -1,6 +1,6 @@
 NinetyNineCatsDay1::Application.routes.draw do
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resource :sessions, only: [:new, :create, :destroy]
 
   resources :users, only: [:create, :new]
   resources :cats, except: :destroy

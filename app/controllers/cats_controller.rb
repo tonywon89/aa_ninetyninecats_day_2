@@ -1,6 +1,6 @@
 class CatsController < ApplicationController
-  before_action :check_logged_in, only: [:new, :show, :edit]
-  before_action :check_owner, only: [:edit]
+  before_action :check_logged_in, only: [:new, :show, :edit, :update]
+  before_action :check_owner, only: [:edit, :update]
 
   def index
     @cats = Cat.all
@@ -57,10 +57,4 @@ class CatsController < ApplicationController
     end
   end
 
-  def check_owner
-    if current_user.cats.where(id: params[:id]).empty?
-      flash[:not_owner] = "You are not the owner"
-      redirect_to cats_url
-    end
-  end
 end

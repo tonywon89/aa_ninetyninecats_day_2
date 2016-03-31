@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :check_logged_in, only: [:new]
+  before_action :check_not_logged_in, only: [:new]
 
   def new
     @user = User.new
@@ -24,10 +24,8 @@ class SessionsController < ApplicationController
   def destroy
 
     if current_user
-      current_user.reset_session_token!
-      session[:session_token] = nil
-      @current_user = nil
-      redirect_to new_session_url
+      log_out!
+      redirect_to new_sessions_url
     else
       redirect_to :back
     end
@@ -37,9 +35,5 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:user_name, :password)
-  end
-
-  def check_logged_in
-    redirect_to cats_url if current_user
   end
 end
